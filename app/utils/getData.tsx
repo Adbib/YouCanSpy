@@ -11,13 +11,23 @@ export default async function getData(id: number) {
     try {
       const element = sites[i];
       const secResult: any = [];
-      const check = await prisma.sites.findUnique({
+      const check: any = await prisma.sites.findUnique({
         where: {
           title: element,
         },
       });
       if (check) {
-        results.push(...check.imgs);
+        const bla: any[] = [];
+        check.imgs.map((itm: any) => {
+          const items = { uri: itm.uri, filename: itm.filename, link: element };
+          bla.push(items);
+        });
+        // for (let i = 0; i < check.imgs.length; i++) {
+        // check.imgs[3].link = check.title;
+        // console.log("check.imgs[i]", check.imgs[i]);
+        // }
+        // console.log("check", check.imgs);
+        results.push(...bla); //link:check.title
       } else {
         console.log(i, " : ", element);
 
@@ -36,10 +46,12 @@ export default async function getData(id: number) {
               results.push({
                 uri: imgLink,
                 filename: imgName,
+                link,
               });
               secResult.push({
                 uri: imgLink,
                 filename: imgName,
+                link,
               });
             });
           } catch (err: any) {
@@ -51,10 +63,12 @@ export default async function getData(id: number) {
               results.push({
                 uri: imgLink,
                 filename: imgName,
+                link: element,
               });
               secResult.push({
                 uri: imgLink,
                 filename: imgName,
+                link: element,
               });
             });
             // }
@@ -67,10 +81,12 @@ export default async function getData(id: number) {
             results.push({
               uri: imgLink,
               filename: imgName,
+              link: element,
             });
             secResult.push({
               uri: imgLink,
               filename: imgName,
+              link: element,
             });
           });
         }
@@ -81,6 +97,7 @@ export default async function getData(id: number) {
             title: sites[i],
             uri: sites[i],
             imgs: secResult,
+            // link:elemny
           },
         });
     } catch (error: any) {

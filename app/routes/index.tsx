@@ -51,6 +51,7 @@ export default function Index({}: Props) {
     if (!checkStorage)
       localStorage.setItem("dataNumber", dataNumber.toString());
     if (actionData) setData([...data, ...checkActionData]);
+    // console.log(data);
   }, [actionData]);
 
   const handleClick = () => {
@@ -72,6 +73,7 @@ export default function Index({}: Props) {
         {data &&
           data.map((item: any, index: number) => (
             <Col key={index} sm={12} md={3}>
+              {/* <p>{item.link}</p> */}
               <Image className=" img-fluid" src={item.uri} />
             </Col>
           ))}
